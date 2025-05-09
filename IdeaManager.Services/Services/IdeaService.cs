@@ -1,5 +1,6 @@
 ﻿using IdeaManager.Core.Entities;
 using IdeaManager.Core.Interfaces;
+using IdeaManager.Core.Enums;
 
 public class IdeaService : IIdeaService
 {
@@ -15,8 +16,8 @@ public class IdeaService : IIdeaService
         if (string.IsNullOrWhiteSpace(idea.Title))
             throw new ArgumentException("Le titre est obligatoire.");
 
-        idea.Votes = 0;
-        idea.IsApproved = false;
+        idea.VoteCount = 0;
+        idea.Status = IdeaStatus.InProgress;
 
         await _unitOfWork.IdeaRepository.AddAsync(idea);
         await _unitOfWork.SaveChangesAsync();
@@ -27,8 +28,14 @@ public class IdeaService : IIdeaService
         return await _unitOfWork.IdeaRepository.GetAllAsync();
     }
 
-    public Task VoteForIdeaAsync(int ideaId)
+    public async Task VoteForIdeaAsync(int ideaId)
     {
-        throw new NotImplementedException();
+        var idea = await _unitOfWork.IdeaRepository.GetByIdAsync(ideaId);
+
+        if (idea == null)
+            throw new InvalidOperationException("Idée non trouvée.");
+
+        idea.VoteCount++;
+        await _unitOfWork.IdeaRepository.AddAsync(idea); // Pour simuler une mise à jour simplifiée
     }
 }
