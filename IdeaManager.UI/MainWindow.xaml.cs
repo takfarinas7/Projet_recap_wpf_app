@@ -13,7 +13,7 @@ namespace IdeaManager.UI
         private void NavigateToDashboard_Click(object sender, RoutedEventArgs e)
         {
             GoDashboardButton.Visibility = Visibility.Collapsed;
-         
+            MainFrame2.Visibility = Visibility.Visible;
             MainFrame2.Navigate(new DashboardView());
         }
     }

@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\IdeaManager.Core\IdeaManager.Core.csproj" />
     <ProjectReference Include="..\IdeaManager.Services\IdeaManager.Services.csproj" />
+	  <ProjectReference Include="..\IdeaManager.Data\IdeaManager.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

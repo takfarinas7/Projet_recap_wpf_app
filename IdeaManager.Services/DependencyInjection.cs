@@ -10,6 +10,7 @@ namespace IdeaManager.Services
         public static IServiceCollection AddDomainServices(this IServiceCollection services)
         {
             services.AddScoped<IIdeaService, IdeaService>();
+
             services.AddScoped<IUserService, UserService>();
             return services;
         }

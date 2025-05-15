@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System.Windows;  // ← Ajoute cette directive
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using IdeaManager.Core.Entities;
 using IdeaManager.Core.Interfaces;
@@ -36,6 +37,15 @@ namespace IdeaManager.UI.ViewModels
                 };
 
                 await _ideaService.SubmitIdeaAsync(idea);
+
+                // ← Affiche la boîte de dialogue pour confirmer
+                MessageBox.Show(
+                    "Ton idée a bien été envoyée !",
+                    "Succès",
+                    MessageBoxButton.OK,
+                    MessageBoxImage.Information
+                );
+
                 ErrorMessage = string.Empty;
             }
             catch (Exception ex)
