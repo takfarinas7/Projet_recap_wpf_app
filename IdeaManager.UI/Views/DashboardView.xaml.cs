@@ -24,5 +24,17 @@ namespace IdeaManager.UI.Views
         {
             InitializeComponent();
         }
+
+        private void NavigateToIdeaForm_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new IdeaFormView());
+        }
+
+
+
+        private void NavigateToIdeaList_Click(object sender, RoutedEventArgs e)
+        {
+            MainFrame.Navigate(new IdeaListView());
+        }
     }
 }
