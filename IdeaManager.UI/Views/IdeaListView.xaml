@@ -56,13 +56,12 @@
                              Foreground="Gray"
                              Margin="0,4,0,8"/>
 
-                                    <!-- Description -->
                                     <TextBlock Text="{Binding Description}"
                              TextWrapping="Wrap"
                              FontSize="14"
                              Margin="0,0,0,8"/>
 
-                                    <!-- Statut & Votes -->
+                            
                                     <StackPanel Orientation="Horizontal" Margin="0,0,0,8">
                                         <TextBlock Text="Statut: " FontWeight="SemiBold"/>
                                         <TextBlock Text="{Binding Status}"/>
