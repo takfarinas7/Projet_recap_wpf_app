@@ -17,37 +17,38 @@ namespace IdeaManager.Tests.Services
 
         public IdeaServiceTests()
         {
-            // 1) On crée un Fake IRepository<Idea>
+            // creation dun fake repo a base de Idea
             _repoMock = new Mock<IRepository<Idea>>();
 
-            // 2) On crée un Fake IUnitOfWork qui expose notre repo
+            //je crée un Fake IUnitOfWork qui utilise mon fake repo et non ma bd
             _uowMock = new Mock<IUnitOfWork>();
             _uowMock
                 .Setup(u => u.IdeaRepository)
                 .Returns(_repoMock.Object);
 
-            // 3) On simule SaveChangesAsync() pour renvoyer "1" (succès)
+            // Configure SaveChangesAsync() pour retourner 1 (nbr de lignes affectees)
             _uowMock
                 .Setup(u => u.SaveChangesAsync())
                 .ReturnsAsync(1);
 
-            // 4) On instancie le service réel en lui passant notre Fake UoW
+            //j'instancie le ideaService en lui passant mon faux mock pr tester la logique metier (logique de si tout fonctionne bien)
             _service = new IdeaService(_uowMock.Object);
         }
 
         [Fact]
         public async Task SubmitIdeaAsync_EmptyTitle_ThrowsArgumentException()
         {
-            // Arrange: idée invalide (titre vide)
-            var badIdea = new Idea
+            //technique des trois A
+            // Arrange: idee mauvaise (je mets un titre vide)
+            var pasDeTitre = new Idea
             {
                 Title = "",
-                Description = "n'importe quoi"
+                Description = "wadefsrgthyjhgfwd"
             };
 
             // Act & Assert: l'appel doit jeter ArgumentException
             await Assert.ThrowsAsync<ArgumentException>(
-                () => _service.SubmitIdeaAsync(badIdea)
+                () => _service.SubmitIdeaAsync(pasDeTitre)
             );
 
             // Et on ne doit JAMAIS appeler AddAsync ni SaveChangesAsync
@@ -59,30 +60,30 @@ namespace IdeaManager.Tests.Services
         public async Task SubmitIdeaAsync_ValidIdea_CallsAddAndSaveAndSetsDefaults()
         {
             // Arrange: idée valide
-            var goodIdea = new Idea
+            var bonTestQuiFaitPlaisir = new Idea
             {
-                Title = "Mon idée",
-                Description = "Une super description"
+                Title = "defrgt",
+                Description = "sdfghy"
             };
 
-            // Act: on soumet l'idée
-            await _service.SubmitIdeaAsync(goodIdea);
+            // Act
+            await _service.SubmitIdeaAsync(bonTestQuiFaitPlaisir);
 
-            // Assert 1: AddAsync a bien été appelé UNE fois AVEC le même objet
+            // Assert 1: AddAsync sest fait call 1 fois avc mm objet
             _repoMock.Verify(r =>
                 r.AddAsync(It.Is<Idea>(i =>
-                    i.Title == goodIdea.Title &&
-                    i.Description == goodIdea.Description
+                    i.Title == bonTestQuiFaitPlaisir.Title &&
+                    i.Description == bonTestQuiFaitPlaisir.Description
                 )),
                 Times.Once
             );
 
-            // Assert 2: SaveChangesAsync a bien été appelé UNE fois
+            // Assert 2: SaveChangesAsync sest fait call 1 fois
             _uowMock.Verify(u => u.SaveChangesAsync(), Times.Once);
 
-            // Assert 3: le service a correctement initialisé VoteCount et Status
-            Assert.Equal(0, goodIdea.VoteCount);
-            Assert.Equal(IdeaStatus.InProgress, goodIdea.Status);
+            // Assert 3: le service a bien initialiser VoteCount et Status
+            Assert.Equal(0, bonTestQuiFaitPlaisir.VoteCount);
+            Assert.Equal(IdeaStatus.InProgress, bonTestQuiFaitPlaisir.Status);
         }
     }
 }
