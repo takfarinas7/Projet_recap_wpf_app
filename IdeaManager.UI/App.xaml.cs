@@ -34,12 +34,11 @@ namespace IdeaManager.UI
 
             ServiceProvider = services.BuildServiceProvider();
 
-            // **SUPPRIME le fichier ideas.db s’il existe**  
             var dbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "ideas.db");
             if (File.Exists(dbPath))
                 File.Delete(dbPath);
 
-            // (Re)crée la BD fraîche
+            
             using (var scope = ServiceProvider.CreateScope())
             {
                 var ctx = scope.ServiceProvider.GetRequiredService<IdeaDbContext>();

@@ -15,25 +15,37 @@ namespace IdeaManager.UI.Views
 
         private async void SubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            // Récupère les valeurs
             var idea = new Idea
             {
                 Title = TitleTextBox.Text,
                 Description = DescriptionTextBox.Text
             };
+
+            // Résout le service
             var svc = App.ServiceProvider.GetRequiredService<IIdeaService>();
 
             try
             {
+                // Sauvegarde
                 await svc.SubmitIdeaAsync(idea);
-                MessageBox.Show("Idée enregistrée !", "Succès", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Navigue vers la page de liste via la frame publique
-                var main = (MainWindow)Application.Current.MainWindow;
-                main.MainFrame2.Navigate(new IdeaListView());
+                // Confirmation
+                MessageBox.Show("Idée enregistrée !",
+                                "Succès",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Information);
+
+                // → Remise à zéro des champs
+                TitleTextBox.Text = string.Empty;
+                DescriptionTextBox.Text = string.Empty;
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur : {ex.Message}", "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Erreur : {ex.Message}",
+                                "Erreur",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
             }
         }
     }

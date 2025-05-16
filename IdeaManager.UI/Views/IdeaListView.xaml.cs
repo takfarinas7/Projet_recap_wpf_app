@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using IdeaManager.Core.Interfaces;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,8 +16,7 @@ namespace IdeaManager.UI.Views
         {
             var svc = App.ServiceProvider.GetRequiredService<IIdeaService>();
             var all = await svc.GetAllAsync();
-            IdeasListView.ItemsSource = all;
+            IdeasItemsControl.ItemsSource = all;
         }
-
     }
 }

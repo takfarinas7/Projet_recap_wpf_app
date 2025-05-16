@@ -38,7 +38,6 @@ namespace IdeaManager.UI.ViewModels
 
                 await _ideaService.SubmitIdeaAsync(idea);
 
-                // ← Affiche la boîte de dialogue pour confirmer
                 MessageBox.Show(
                     "Ton idée a bien été envoyée !",
                     "Succès",

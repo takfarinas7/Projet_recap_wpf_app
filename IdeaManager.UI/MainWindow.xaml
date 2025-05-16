@@ -4,7 +4,6 @@
         Title="Idea Manager" Height="400" Width="800"
         Background="AliceBlue">
     <Grid>
-        <!-- Frame masqué au départ, rendu public -->
         <Frame x:Name="MainFrame2"
                x:FieldModifier="public"
                NavigationUIVisibility="Hidden"
@@ -12,7 +11,6 @@
                Margin="10"
                Visibility="Collapsed" />
 
-        <!-- Bouton centré -->
         <Button x:Name="GoDashboardButton"
                 Content="Votre Dashboard"
                 Width="200" Height="60"
